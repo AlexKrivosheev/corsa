@@ -1,4 +1,4 @@
-<h1> # corsa <h1>
+<h1> Corsa <h1>
   
 <p> Multifunctional platform for automatization SEO Tasks. Smart solutions for monitoring, analysis and assessing the effectiveness of search engine promotion <p>
 
