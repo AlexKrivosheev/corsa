@@ -1,0 +1,87 @@
+﻿@model Corsa.Models.SettingsViewModel
+@{
+
+    ViewData["Title"] = "Settings";
+}
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[]
+        {
+    new BreadCrumbItem("Projects", Url.Action("Index","Project")),
+    new BreadCrumbItem("Settings", Url.Action("Index","Settings"),true)
+
+        };
+    }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+    <ul class="crs-toolbar-btn__list nav">
+        <li class="crs-toolbar-btn__item">
+            <button type="button" onclick="Save()" class="btn btn-primary">Save</button>
+        </li>
+    </ul>
+}
+
+    <div class="crs-container container-fluid">
+        
+        @using (Html.BeginForm("Save", "Settings"))
+        {
+        @Html.AntiForgeryToken();
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        <h4> General</h4>
+
+        <div class="col-6">
+
+        <div class="form-group">
+            <label for="inputLanguage">Language</label>
+            <select name="Language" class="form-control">
+                @foreach (var language in Model.Languages)
+                {
+                    if (Model.Language == language.Id)
+                    {
+                         <option value="@language.Id"  selected>@language.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@language.Id">@language.Name</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="inputLanguage">Time Zone</label>
+            <select class="form-control" name="TimeZone">
+
+                @foreach (var zone in Model.Zones)
+                {
+                    if (Model.TimeZone == zone.Id)
+                    {
+                        <option value="@zone.Id" selected>@zone.DisplayName</option>
+                    }
+                    else
+                    {
+                        <option value="@zone.Id">@zone.DisplayName</option>
+                    }
+                }
+
+
+
+            </select>
+        </div>  
+        </div>
+        }
+
+    </div>
+
+    <script>
+        function Save() {
+            $("form").submit();
+        }
+
+
+    </script>

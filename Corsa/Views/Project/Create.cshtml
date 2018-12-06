@@ -1,0 +1,44 @@
+﻿@model Corsa.Models.ProjectModel.ProjectViewModel
+@{
+    ViewData["Title"] = "Creating Project";
+}
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[] {
+           new BreadCrumbItem("Projects", Url.Action("Index","Project"), true)
+        };
+    }
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+    <ul class="nav action-navbar-list">
+        <li class="action-item">
+            <button type="button" form="requestForm" class="btn btn-primary" onclick="Save()">Save</button>
+        </li>
+    </ul>
+}
+
+<div class="crs-container container-fluid">
+
+    <div class="col-6">
+
+        @using (Html.BeginForm("Create", "Project"))
+        {
+            @Html.AntiForgeryToken();
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <label for="projectNameInput">Project</label>
+                <input type="text" name="Name" class="form-control" id="projectNameInput" aria-describedby="projectInputTextHelp" placeholder="Enter text">
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function Save() {
+        $("form").submit();
+    }
+</script>

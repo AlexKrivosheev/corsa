@@ -1,0 +1,127 @@
+﻿@model Corsa.Models.Moduls.EmailNotifViewModel
+
+@{
+    ViewData["Title"] = $"Edit : {Model.Id}";
+}
+
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[]
+        {
+new BreadCrumbItem("Projects", Url.Action("Index","Project")),
+new BreadCrumbItem(Model.ProjectName, Url.Action("Index","Project",new {Id=Model.Project})),
+new BreadCrumbItem("Config", Url.Action("Config","Project")),
+new BreadCrumbItem(Model.Name, Url.Action("Index","EmailNotif", new {Id=Model.Id})),
+new BreadCrumbItem("Edit", Url.Action("Edit","EmailNotif", new {Id=Model.Id}),true)
+        };
+    }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+    <ul class="crs-toolbar-btn__list nav">
+        <li class="crs-toolbar-btn__item">
+            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Delete","EmailNotif",new {Id=Model.Id})'">Delete</button>
+        </li>
+        <li class="crs-toolbar-btn__item">
+            <button type="button" class="btn btn-primary" onclick="Save()">Save</button>
+        </li>
+    </ul>
+}
+
+    <div class="crs-container crs-email-notif container-fluid">
+
+
+
+        @using (Html.BeginForm("Edit", "EmailNotif"))
+    {
+        @Html.AntiForgeryToken();
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <input type="hidden" name="Id" value="@Model.Id">
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade pt-4 show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+
+            <div class="col-6">
+
+                <div class="form-group">
+                    <label for="inputName">Name</label>
+                    <input type="text" name="Name" value="@Model.Name" class="form-control" id="inputName" aria-describedby="inputName" placeholder="Enter name">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputDescription">Description</label>
+                    <input type="text" name="Description" value="@Model.Description" class="form-control" id="inputDescription" aria-describedby="inputDescription" placeholder="">
+                </div>
+
+                <h4>Notification Settings</h4>
+
+                <div class="form-group">
+                    <label for="inputParticipants">Participants</label>
+                    <input type="text" name="Participants" value="@Model.Participants" class="form-control" id="inputParticipants" aria-describedby="inputParticipants" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSender">Sender</label>
+                    <input type="text" name="Sender" value="@Model.Sender" class="form-control" id="inputHostName" aria-describedby="inputSender" placeholder="">
+                </div>
+
+                <h4> Email Settings</h4>
+
+                <div class="form-group">
+                    <label for="inputHostName">HostName</label>
+                    <input type="text" name="HostName" value="@Model.HostName" class="form-control" id="inputHostName" aria-describedby="inputHostName" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPort">Port</label>
+                    <input type="text" name="Port" value="@Model.Port" class="form-control" id="inputPort" aria-describedby="inputPort" placeholder="">
+                </div>
+
+                <div class="form-group dropdown">
+                    <div class="">EnableSsl</div>
+                    <select name="EnableSsl" class="form-control">
+                        <option class="" @(Model.EnableSsl?"selected":"") value="true"> True</option>
+                        <option class="" @(Model.EnableSsl?"":"selected") value="false"> False</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputUser">User</label>
+                    <input type="text" name="User" value="@Model.User" class="form-control" id="inputUser" aria-describedby="inputUser" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" name="Password" value="@Model.Password" class="form-control" id="inputPassword" aria-describedby="inputPassword" placeholder="">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+}
+    </div>
+
+
+<script>
+    function Save() {
+        $("form").submit();
+    }
+
+    $('input[type="checkbox"]').change(function () {
+        this.value = this.checked? "true":"false";
+    })
+</script>

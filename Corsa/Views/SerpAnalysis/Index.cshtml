@@ -1,0 +1,98 @@
+﻿@using Corsa.Domain.Processing.Moduls
+@using Corsa.Infrastructure.TagHelpers;
+
+@model Corsa.Models.Moduls.SerpAnalysisModuleViewModel
+@{
+    ViewData["Title"] = $"{Model.Config.ProjectModule.Name}";
+    Layout = "_FluidLayout";
+}
+
+<script src="~/js/module-runtime-state.js"></script>
+<link href="~/css/module-runtime-state.css" rel="stylesheet" />
+
+<script src="~/js/module-result-details.js"></script>
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[]
+        {
+    new BreadCrumbItem("Projects", Url.Action("Index","Project")),
+    new BreadCrumbItem(Model.ProjectName, Url.Action("Index","Project",new {Id=Model.Project})),
+    new BreadCrumbItem(Model.Name, Url.Action("Index","SerpAnalysis", new {Id=Model.Id}),true)
+        };
+    }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+    <ul class="crs-toolbar-btn__list nav">
+        <li class="crs-toolbar-btn__item">
+            <button type="button" onclick="location.href='@Url.Action("Edit", "SerpAnalysis", new { id = Model.Id})'" class="btn btn-primary">Edit</button>
+        </li>
+        <li class="crs-toolbar-btn__item">
+            <button type="button" id="update" onclick="Update('@Url.Action("Update", "SerpAnalysis", new { id = Model.Id })')" class="btn btn-primary">Update</button>
+        </li>
+    </ul>
+}
+
+@{
+    Html.RenderPartial("_DefaultModalWindow");
+    Html.RenderPartial("_ModuleRuntimeState");
+    Html.RenderPartial("_Statistics", Model);
+}
+
+<script>
+
+    var runtimeModuleState;
+    var moduleResult;
+
+    $(document).ready(function () {
+        runtimeModuleState = new RuntimeStateModule('@Url.Action("GetModuleState", "SerpAnalysis", new { id = Model.Id })', '#moduleRuntimeStateBar', 1000);
+        $(runtimeModuleState).on("completed", function () { updateStatistics('@Url.Action("GetStatistics", "SerpAnalysis", new { id = Model.Id })'); });
+        runtimeModuleState.start();
+
+        moduleResult = new ResultDetailsModule("#modalWindow", "#modalTitle", "#modalBody", "#modalProgressBar", "#modalInfo");
+    });
+
+
+    function openResultDetails(title, url) {
+
+        moduleResult.open(title, url);
+
+        return false;
+    }
+
+    function Update(url) {
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+
+                success: function (data) {
+                    runtimeModuleState.start(data);
+                }
+            });
+    }
+
+    function updateStatistics(url) {
+
+        runtimeModuleState.showMessage("Module execution has been completed. Getting result...");
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html',
+
+            success: function (data) {
+                $('#requestStatistics').replaceWith(data);
+                runtimeModuleState.hideMessage();
+            }
+        });
+    }
+
+
+</script>
+
+

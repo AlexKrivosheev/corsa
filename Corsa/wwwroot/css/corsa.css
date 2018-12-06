@@ -1,0 +1,587 @@
+﻿/*
+* === Base structure ===
+*/
+body {
+    background: #DBE5EA;
+}
+
+/*
+* === Corsa layout ===
+*/
+
+.crs-header__title {
+
+}
+    .crs-header__title:before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 19px;
+        content: "\f542";
+        padding-right: 5px;
+    }
+
+.crs-toolbar {
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.crs-toolbar__title{}
+.crs-toolbar__action{}
+.crs-toolbar-btn{}
+.crs-toolbar-btn__list {}
+.crs-toolbar-btn__item {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.crs-breadcrumb {
+    background-color: transparent;
+    padding: 0px;
+    margin: 0px;
+}
+
+.crs-breadcrumb__item {
+    font-size:20px;
+}
+    .crs-breadcrumb__item a,
+    .crs-breadcrumb__item a:hover
+    {
+        font-size: 20px;
+        text-decoration:none;
+    }
+
+    .crs-breadcrumb__item.active a,
+    .crs-breadcrumb__item.active a:hover {        
+        color: #212529;
+    }
+
+.crs-statistics {
+}
+.crs-statistics__configuration__incorrect {}
+.crs-statistics__info__empty{}
+.crs-statistics__table {}
+
+.crs-statistics__table .cell{
+    text-align: center;
+}
+
+    .crs-statistics__table td,
+    .crs-statistics__table th {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 20px;
+        padding-left: 5px;
+        height: 46px;
+    }
+
+.crs-module-result {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.crs-module-result__state{}
+.crs-module-result__state__success {}
+.crs-module-result__state__error {}
+.crs-module-result__details {}
+
+.crs-action-details{}
+.crs-action-details__title {
+    font-size: 24px;
+
+}
+    .crs-action-details__title:before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 32px;
+    }
+
+    .crs-action-details__title.success:before {
+        content: "\f058";
+        color: #0f7864;
+    }
+
+    .crs-action-details__title.error:before {
+        content: "\f071";
+        color: #E74C3C;
+    }
+
+
+.crs-action-details__start-time{}
+.crs-action-details__start-time{}
+.crs-action-details__finished-time{}
+.crs-action-details__message{}crs-action-log__log-level__information 
+
+.crs-module-result__logs {}
+.crs-action-log {}
+
+.crs-action-log__log-level__information {
+    color: green;
+}
+
+.crs-action-log__log-level__error {
+    color: red;
+}
+
+.crs-action-log__log-level__warning {
+    color: goldenrod;
+}
+
+.crs-container {
+    padding: 15px;
+    background: #ffffff;
+    margin-bottom: 10px;
+}
+
+.crs-container {
+    padding: 15px;
+    background: #ffffff;
+    margin-bottom: 10px;
+}
+
+    .crs-container h4 {
+        margin-bottom: 20px;
+    }
+
+
+/*
+* === Corsa SERP MODULE ===
+*/
+.crs-serp-statistics {
+    white-space: nowrap;
+    vertical-align: top;
+    padding-top: 10px;
+}
+
+.crs-serp-statistics__container {
+}
+
+.crs-serp-statistics__requests {
+    position: absolute;
+}
+
+.crs-serp-statistics__results {
+    overflow-x: auto;    
+    margin-left: 250px;
+}
+
+.crs-serp-statistics__table-request {}
+
+    .crs-serp-statistics__table-request th {
+        min-width: 250px;
+    }
+
+
+.crs-serp-statistics__table-result {}
+
+    .crs-serp-statistics__table-result th {
+        min-width: 150px;
+    }
+
+
+/*
+* === Corsa Lex MODULE ===
+*/
+.crs-lex-statistics {
+    white-space: nowrap;
+    vertical-align: top;
+    padding-top: 10px;
+}
+
+.crs-lex-statistics__container {
+}
+
+.crs-lex-statistics__words {
+    position: absolute;
+}
+
+.crs-lex-statistics__data {
+    overflow-x: auto;
+    margin-left: 250px;
+}
+
+.crs-lex-statistics__table-words {
+}
+
+    .crs-lex-statistics__table-words th {
+        min-width:250px;
+    }
+
+.crs-lex-statistics__table-data {
+
+}
+    .crs-lex-statistics__table-data th {
+        min-width: 150px;
+    }
+
+/*
+* === Corsa Yandex XML MODULE ===
+*/
+
+.crs-yndex-xml {
+
+}
+.crs-yndex-xml__request {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.crs-yndex-xml__request{}
+.crs-yndex-xml__statistics{}
+
+
+.crs-statistics-runtime {}
+.crs-statistics-runtime__info__empty {}
+.crs-statistics-runtime__state {}
+
+.crs-yandex-xml-showcase,
+.crs-yandex-xml-toolbox {
+    background-color: #323232;
+    color: white;
+}
+
+.crs-yandex-xml-showcase__icon,
+.crs-yandex-xml-toolbox__icon {
+    color:#ffe603;
+}
+.crs-yandex-xml-showcase__title,
+.crs-yandex-xml-toolbox__title {
+    color: white;
+}
+
+
+/*
+* === Corsa Yandex Direct MODULE ===
+*/
+
+.crs-yndex-direct {
+}
+
+.crs-yndex-direct__request {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.crs-yndex-direct__request {
+}
+
+.crs-yndex-direct__statistics {
+}
+
+.crs-yandex-direct-showcase,
+.crs-yandex-direct-toolbox {
+    background-color: #ffcc66;
+    color: #323232;
+}
+
+.crs-yandex-direct-showcase__icon,
+.crs-yandex-direct-toolbox__icon {
+    color: #c00;
+}
+
+.crs-yandex-direct-showcase__title,
+.crs-yandex-direct-toolbox__title {
+    color: black;
+}
+
+
+/*
+* === Corsa Http Provider MODULE ===
+*/
+
+.crs-http-provider {
+}
+
+.crs-http-provider__request {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.crs-http-provider__request {
+}
+
+.crs-http-provider__statistics {
+}
+
+.crs-http-provider-showcase,
+.crs-http-provider-toolbox {
+    background-color: #658173;
+    color: #323232;
+}
+
+.crs-http-provider-showcase__icon,
+.crs-http-provider-toolbox__icon {
+    color: #2C3E50;
+}
+
+.crs-http-provider-showcase__title,
+.crs-http-provider-toolbox__title {
+    color: black;
+}
+
+.crs-statistics-http-provider {
+    max-height: 400px;
+    min-height: 100px;
+    background-color: #f8f9fa;
+    padding: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+ 
+/*
+* === Corsa Antigate MODULE ===
+*/
+
+.crs-antigate {
+}
+
+.crs-antigate__request {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.crs-antigate__request {
+}
+
+.crs-antigate__statistics {
+}
+
+.crs-antigate-showcase,
+.crs-antigate-toolbox {
+    background-color: #223e67;
+    color: white;
+}
+
+.crs-antigate-showcase__icon,
+.crs-antigate-toolbox__icon {
+    color: white;
+}
+
+.crs-antigate-showcase__title,
+.crs-antigate-toolbox__title {
+    color: white;
+}
+
+.crs-statistics-antigate {
+    max-height: 400px;
+    min-height: 100px;
+    background-color: #f8f9fa;
+    padding: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/*
+* === Corsa Email Notification MODULE ===
+*/
+.crs-email-notif {
+}
+
+.crs-email-notif__message {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.crs-email-notif-showcase,
+.crs-email-notif-toolbox {
+    background-color: #ea5a4d;
+    color: #212529;
+}
+
+.crs-email-notif-showcase__icon,
+.crs-email-notif-toolbox__icon {
+    color: #f39c12;
+}
+
+.crs-email-notif-showcase__title,
+.crs-email-notif-toolbox__title {
+     color: #212529;
+}
+
+.crs-email-notif__statistics {
+    max-height: 400px;
+    min-height: 100px;
+    background-color: #f8f9fa;
+    padding: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+
+
+
+
+.crs-statistics-runtime__state:hover {
+    text-decoration: none;
+}
+
+    .crs-statistics-runtime__state.success::before {
+        
+    }
+
+    .crs-statistics-runtime__state.error::before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f071";
+        color: #E74C3C;
+        font-size: 20px;
+    }
+
+
+    
+    
+    .crs-statistics-runtime__result {
+    }
+.crs-statistics-serp {
+    min-height: 100px;
+    background-color: #f8f9fa;
+    padding: 5px;
+}
+.crs-statistics-serp__list {}
+.crs-statistics-serp__item {}
+.crs-serp-result-item {
+    position: relative;
+    display: block;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.crs-serp-result-item__title {}
+.crs-serp-result-item__url {}
+
+
+.body-content {
+    padding-top: 10px;
+}
+
+.request-list {
+
+}
+
+.request-item {
+    font-size: 20px;
+}
+
+.request-item:hover {
+        cursor: pointer;
+        background-color: #f1fdfb;
+}
+
+.request-item .action {
+    font-size: 18px;
+}
+
+.request-item .action a {
+        padding-left: 10px;
+        padding-right: 10px;
+}
+
+.statistics-navbar {
+    padding-top: 5px;
+}
+
+.request-statistics-header .title{    
+    padding-right:10px;
+}
+
+.request-statistics-details .date {
+    font-size: 18px;
+    padding-left: 5px;
+}
+
+.request-statistics-details .details {    
+    padding-left: 5px;
+}
+
+
+
+.request-statistics-progress-bar {
+    
+}
+
+.request-statistics-progress-bar .loader {
+        
+}
+
+.request-statistics-progress-bar .title {
+        font-size: 20px;
+        padding-left: 10px;
+        padding-right: 10px;        
+}
+
+
+
+.progress-bar-container{
+    height:6px;
+}
+
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+.request-statistics-header {
+padding-left: 5px;
+padding-right:5px;
+}
+.request-statistics-subaction-bar {
+    font-size: 20px;
+}
+
+.request-statistics-collapsed-button:before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 32px;
+    content: "\f106";
+}
+
+.request-statistics-update-button {
+
+}
+
+.request-statistics-collapsed-button.collapsed:before {
+        content: "\f107";
+}
+.request-statistics-collapsed-button,
+.request-statistics-collapsed-button a:hover,
+.request-statistics-collapsed-button a:active,
+.request-statistics-collapsed-button a:focus {
+    text-decoration: none!important;
+}
+
+.serp-page-favicon{
+    width:16px;
+    height:16px;
+}
+
+
+.modul-selector-item  {   
+    margin-top:0px;
+}
+
+    .modul-selector-item > div:hover {        
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        margin-top:0px;
+    }
+
+    .statistic-result-state {
+        background-color: transparent;
+    }
+
+        .statistic-result-state.success::before {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f058";
+            color: #0f7864;
+        }
+
+        .statistic-result-state.error::before {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f071";
+            color: #E74C3C;
+        }

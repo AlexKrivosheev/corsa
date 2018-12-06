@@ -1,0 +1,52 @@
+﻿@model Corsa.Models.ProjectModel.ProjectViewModel
+@{
+    ViewData["Title"] = $"Edit : {Model.Instance.Name}";
+}
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[] {
+            new BreadCrumbItem("Projects", Url.Action("Index","Project"), true),
+            new BreadCrumbItem(Model.Instance.Name,Url.Action("Index","Project",new {Id=Model.Instance.Id})),
+            new BreadCrumbItem("Edit",Url.Action("Edit","Project",new {Id=Model.Instance.Id}))
+        };
+    }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+    <ul class="crs-toolbar-btn__list nav">
+        <li class="crs-toolbar-btn__item">
+            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Delete","Project",new {Id=Model.Instance.Id})'">Delete</button>
+        </li>
+        <li class="crs-toolbar-btn__item">
+            <button type="button" class="btn btn-primary" onclick="Save()">Save</button>
+        </li>
+    </ul>
+}
+
+<div class="crs-container container-fluid">
+
+    <div class="col-6">
+
+        @using (Html.BeginForm("Edit", "Project"))
+        {
+            @Html.AntiForgeryToken();
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <input type="hidden" name="Id" class="form-control" value="@Model.Instance.Id">
+                <label for="projectNameInput">Name</label>
+                <input type="text" name="Name" class="form-control" value="@Model.Instance.Name" id="projectNameInput" placeholder="Enter text">
+
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function Save() {
+        $("form").submit();
+    }
+</script>

@@ -1,0 +1,28 @@
+﻿@using Corsa.Domain.Tasks
+@using Corsa.Models.Moduls
+@model Corsa.Models.Moduls.ScheduleViewModel
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="one-time-tab" data-toggle="tab" href="#onetime" role="tab" aria-controls="onetime" aria-selected="true">One Time</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="daily-tab" data-toggle="tab" href="#daily" role="tab" aria-controls="daily" aria-selected="false">Daily</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div class="tab-pane fade pt-4 show active" id="onetime" role="tabpanel" aria-labelledby="one-time-tab">
+            @{
+                Html.RenderPartial("_OneTimeSchedule", new OneTimeScheduleViewModel(Model.OneTimeSchedules));
+            }
+
+        </div>
+        <div class="tab-pane fade pt-4" id="daily" role="tabpanel" aria-labelledby="daily-tab">
+            @{
+                Html.RenderPartial("_DailySchedule", new DailyScheduleModelView(Model.DailySchedules));
+            }
+        </div>
+    </div>
+

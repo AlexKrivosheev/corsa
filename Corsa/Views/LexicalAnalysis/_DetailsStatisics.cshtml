@@ -1,0 +1,128 @@
+﻿@using Corsa.Infrastructure
+@using Corsa.Domain.Moduls.LexicalAnalysis
+@model Corsa.Models.Moduls.ModuleResultViewModel<LexModuleData>
+
+<div class="crs-container container-fluid">
+
+@{
+    var statisticContentId = $"statisticsDetails_{Model.Result.Details.Id}";
+}
+
+<div class="row request-statistics-header">
+    <div class="col-9">
+        <div class="">
+            <h5 class="title"> <span class="date">@Model.Result.Details.FinishedTime.ToString("MMM dd, yyyy HH:mm") </span></h5>
+            @if (Model.Result.Details != null)
+            {
+                <div class="details">
+                <a href="#" onclick="openResultDetails('@Model.Result.Details.FinishedTime.ToShortDateString()','@Url.Action("GetResult", "LexicalAnalysis", new { modulId = Model.ModuleId, resultId = Model.Result.Id })')">Show details</a>
+            </div>
+        }
+        </div>
+    </div>
+
+    <div class="col-3 request-statistics-subaction-bar">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="request-statistics-collapsed-button" data-toggle="collapse" href="#@statisticContentId" role="button" aria-expanded="false" aria-controls="collapseExample">
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    </div>
+<div id="@statisticContentId" class="crs-lex-statistics collapse show">
+
+    @*  <span class="date">@Model.Date.ToString("MMM dd, yyyy HH:mm") </span>*@
+
+    @if (Model.Result.Details.Result == Corsa.Domain.Models.Actions.ActionExecutionResult.Error)
+    {
+        <div class="alert alert-dismissible alert-danger">
+            <h4 class="alert-heading">Error!</h4>
+            @Model.Result.Details.Message;
+        </div>
+    }
+    else
+    {
+
+        <div class="crs-lex-statistics__container">
+            <div class="crs-lex-statistics__words">
+                <table class="crs-statistics__table crs-lex-statistics__table-words table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="crs-lex-table-words__total-row">                           
+                            <td title="Total Words"> Total Words</td>
+                        </tr>                        
+                        @foreach (var word in Model.Result.Data.Stats.Words.OrderByDescending(word => word.MedianValue))
+                        {
+                            <tr>
+                                <td  title="@word.MedianValue">@word.Name </td>                       
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="crs-lex-statistics__data">
+                <table class="crs-statistics__table crs-lex-statistics__table-data table-striped table-bordered">
+                    <thead>
+                        <tr class="tr">
+                            @foreach (var serpPage in Model.Result.Data.Stats.SerpPages.OrderBy(page => page.Position))
+                            {
+                                <th scope="col">
+
+                                @if (serpPage.Favicon != null)
+                                {
+                                    string imageBase64 = Convert.ToBase64String(serpPage.Favicon);
+                                    string imageSrc = $"data:image/gif;base64,{imageBase64}";
+                                    <img class="serp-page-favicon" src="@imageSrc" />
+                                }
+                                <a href="@serpPage.Url" title="@serpPage.Title" target="_blank">@serpPage.GetShortUrl().Truncate(50)</a>
+                                </th>
+                            }
+                  
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            @foreach (var serpPage in Model.Result.Data.Stats.SerpPages.OrderBy(page => page.Position))
+                            {
+                            <td class="cell"> @serpPage.TotalWords</td>
+                            }
+                        </tr>
+
+                            @foreach (var word in Model.Result.Data.Stats.Words.OrderByDescending(word => word.MedianValue))
+                            {
+                                <tr>
+                                
+                                    @foreach (var page in Model.Result.Data.Stats.SerpPages)
+                                    {
+                                        int value = 0;
+                                        var cell = Model.Result.Data.Stats.FrequencyData.Find(item => item.LexModuleSerpId == page.Id && item.LexModuleWordId == word.Id);
+                                        @if (cell != null)
+                                        {
+                                            value = cell.Value;
+                                        }
+                                        <td class="cell">
+                                            @if (value > 0)
+                                            {@value}
+                                        </td>
+                                    }
+                                </tr>
+                            }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    }
+</div>
+        </div>

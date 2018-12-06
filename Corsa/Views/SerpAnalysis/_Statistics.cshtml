@@ -1,0 +1,16 @@
+﻿@model Corsa.Models.Moduls.SerpAnalysisModuleViewModel
+<div id="requestStatistics" class="crs-statistics">
+   
+        @if (!Model.Results.Any())
+        {
+
+            Html.RenderPartial("_EmptyDetailsStatisics");
+        }
+        else
+        {
+            Html.RenderPartial("_DetailsStatisics", Model);
+        }
+
+</div>
+
+

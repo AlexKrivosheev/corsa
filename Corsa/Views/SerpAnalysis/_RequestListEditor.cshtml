@@ -1,0 +1,63 @@
+﻿@model Corsa.Models.Moduls.SerpAnalysisModuleViewModel
+
+
+    <table id="requestTable" class="table">
+        <thead>
+            <tr>
+                <th scope="col">Request Text</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for(int i=0; i< Model.Config.Requests.Count; i++)
+            {
+             <tr>
+                <td>
+                     <input type="text" name="Requests[@i].Text" class="form-control-plaintext" readonly value="@Model.Config.Requests[i].Text"> 
+                </td>
+                <td>
+                    <input type="text" name="Requests[@i].Description" class="form-control-plaintext" readonly value="@Model.Config.Requests[i].Description">                    
+                </td>
+                <td>
+                    <a href="#" onclick="return DropRequest($(this).closest(&quot;tr&quot;))"><i class="fas fa-trash"></i></a>
+                </td>
+             </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr id="newRow">
+                <th scope="row"><input class="form-control" id="newRequest" type="text" placeholder="Text"></th>
+                <td><input type="text" name="Description" class="form-control" id="newDescription" aria-describedby="descriptionInputText" placeholder="Description"></td>
+                <td> <button class="btn btn-primary" onclick="return AddNewRequest()">Add</button></td>
+            </tr>
+        </tfoot>
+    </table>
+
+<script>
+    function DropRequest(row) {
+   
+        row.remove();
+
+        return false;
+    }
+
+    function AddNewRequest() {
+        var requestInput = $("#newRow").find("#newRequest");
+        var requestDesc = $("#newRow").find("#newDescription");
+        var requestTableBody = $("#requestTable > tbody");
+        var rowCount = $('#requestTable > tbody tr').length;
+
+        requestTableBody.append("<tr>" +
+            "<td><input type='text' name='Requests[" + rowCount + "].Text' class='form-control-plaintext' readonly value='" + requestInput.val() + "'> </td>" +
+            "<td><input type='text' name='Requests[" + rowCount + "].Description' class='form-control-plaintext' readonly value='" + requestDesc.val() + "'> </td>" +
+            "<td><a href='#' onclick='return DropRequest($(this).closest(&quot;tr&quot;))'><i class='fas fa-trash'></i></a></td>" +
+            "</tr>");
+        requestInput.val("");
+        requestDesc.val("");
+
+        return false;
+    }
+</script>

@@ -1,0 +1,22 @@
+﻿@model Corsa.Models.Moduls.ProjectModuleViewModel
+<div class="modul-selector-item col-lg-3 col-md-6 col-sm-12 mb-4 " onclick='location.href="@Url.Action(Model.ViewDescriptor.OpenAction,Model.ViewDescriptor.Controller,new { id = Model.Module.Id })"'>
+    <div class="crs-antigate-showcase card">
+        <div class="card-body">
+            <p class="project-module-identity"> <i class="crs-antigate-showcase__icon fas fa-unlock-alt"></i> @Model.ViewDescriptor.Name </p>
+            <h5 class="crs-antigate-showcase__title card-title">@Model.Module.Name</h5>
+            <p class="crs-antigate-showcase__desc card-text">@Model.Module.Description</p>
+
+            <div class="crs-antigate-showcase__action bar-actions">
+                <ul class="nav justify-content-end">
+                    <li class="nav-item action ml-3">
+                        <a href="@Url.Action("Edit","Antigate",new {Id=Model.Module.Id})"><i class="fas fa-pencil-alt"></i></a>
+                    </li>
+                    <li class="nav-item action ml-3">
+                        <a href="@Url.Action("Delete","Antigate",new {Id=Model.Module.Id})"><i class="fas fa-trash"></i></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿@model Corsa.Models.LoginViewModel
+@{
+
+    ViewData["Title"] = "Login";
+}
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[]
+        {
+    new BreadCrumbItem("Login", Url.Action("Login","Account"),true)
+        };
+    }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+
+}
+
+<div class="crs-container container">
+
+    <div class="col-6">
+
+        <div class="text-danger" asp-validation-summary="All"></div>
+
+        <form asp-action="Login" asp-controller="Account" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <div><span asp-validation-for="Name" class="text-danger"></span></div>
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+
+                <div><span asp-validation-for="Password" class="text-danger"></span></div>
+                <input asp-for="Password" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Log In" />
+            </div>
+        </form>
+
+        <br><br>
+        <p>
+            @Html.ActionLink("Register as a new user", "Register")
+        </p>
+    </div>
+</div>
+

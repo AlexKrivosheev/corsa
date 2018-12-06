@@ -1,0 +1,92 @@
+﻿@model Corsa.Models.Moduls.OneTimeScheduleViewModel
+
+
+<div class="row">
+    <table id="oneTimeScheduleTable" class="table col-8">
+        <thead>
+            <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int i = 0; i < Model.ScheduleTable.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="text" name="OneTimeSchedules[@i].DateTime" class="form-control-plaintext" readonly value="@Model.ScheduleTable[@i].DateTime">
+                    </td>
+                    <td>
+                        <input type="text" name="OneTimeSchedules[@i].Description" class="form-control-plaintext" readonly value="@Model.ScheduleTable[@i].Description">
+                    </td>
+                    <td>
+                        <a href="#" onclick="return DropOneTimeSchedule($(this).closest(&quot;tr&quot;))"><i class="fas fa-trash"></i></a>                        
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr id="newOneTimeScheduleRow">
+                <td>
+                    <input type="datetime-local" name="time" class="form-control" id="time">
+                </td>
+                <td>
+                    <input type="text" name="description" class="form-control" id="description">
+                </td>
+                <td>
+                    <button class="btn btn-primary" onclick="return AddNewOneTimeSchedule()">Add</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+<script>
+    function DropOneTimeSchedule(row) {
+        try {
+            row.remove();
+        }
+        finally
+        {
+
+        }
+        
+
+        return false;
+    }
+
+    function AddNewOneTimeSchedule() {
+
+        try {
+
+            var day = $("#newOneTimeScheduleRow").find("#day");
+            var time = $("#newOneTimeScheduleRow").find("#time");
+            var description = $("#newOneTimeScheduleRow").find("#description");
+
+            var dailyScheduleTableBody = $("#oneTimeScheduleTable > tbody");
+            var rowCount = $('#oneTimeScheduleTable > tbody tr').length;
+
+            var dateTime = new Date(time.val());
+
+            dailyScheduleTableBody.append("<tr>" +
+                "<td><input type='text' name='OneTimeSchedules[" + rowCount + "].DateTime' class='form-control-plaintext' readonly value='" + dateTime.toLocaleString() + "'> </td>" +
+                "<td><input type='text' name='OneTimeSchedules[" + rowCount + "].Description' class='form-control-plaintext' readonly value='" + description.val() + "'> </td>" +
+                "<td><a href='#' onclick='return DropOneTimeSchedule($(this).closest(&quot;tr&quot;))'><i class='fas fa-trash'></i></a></td>" +
+                "</tr>");
+
+            day.val("");
+            time.val("");
+            description.val("");
+        }
+        finally
+        { 
+            
+
+        }
+
+        return false;
+    }
+</script>

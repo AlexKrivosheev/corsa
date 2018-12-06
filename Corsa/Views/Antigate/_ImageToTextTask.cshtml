@@ -1,0 +1,16 @@
+﻿@using Corsa.Domain.Moduls.RutimeModuls.Antigate
+
+@model Corsa.Domain.Moduls.RutimeModuls.Antigate.AntigateTaskResult<ImageToTextTaskSolution>
+
+<div class="form-inline">
+    <label for="textText" class="col-form-label pr-2">Text:</label>
+    <div class=""><span id="textText" class=""> @Model.Solution.Text</span></div>
+</div>
+
+<div class="form-inline">
+    <label for="textUrl" class="col-form-label pr-2">Url:</label>
+    <div class=""><span id="textUrl" class=""> @Model.Solution.Url</span></div>
+</div>
+
+
+

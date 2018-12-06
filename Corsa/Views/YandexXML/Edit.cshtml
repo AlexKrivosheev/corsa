@@ -1,0 +1,125 @@
+﻿@model Corsa.Models.Moduls.YanexXMLModuleViewModel
+
+@{
+    ViewData["Title"] = $"Edit : {Model.Id}";
+}
+
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[]
+        {
+new BreadCrumbItem("Projects", Url.Action("Index","Project")),
+new BreadCrumbItem(Model.ProjectName, Url.Action("Index","Project",new {Id=Model.Project})),
+new BreadCrumbItem("Config", Url.Action("Config","Project")),
+new BreadCrumbItem(Model.Name, Url.Action("Index","YandexXML", new {Id=Model.Id})),
+new BreadCrumbItem("Edit", Url.Action("Edit","YandexXML", new {Id=Model.Id}),true)
+        };
+    }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+    <ul class="crs-toolbar-btn__list nav">
+        <li class="crs-toolbar-btn__item">
+            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Delete","YandexXML",new {Id=Model.Id})'">Delete</button>
+        </li>
+        <li class="crs-toolbar-btn__item">
+            <button type="button" class="btn btn-primary" onclick="Save()">Save</button>
+        </li>
+    </ul>
+}
+
+    <div class="crs-container container-fluid">
+
+
+
+        @using (Html.BeginForm("Edit", "YandexXML"))
+    {
+        @Html.AntiForgeryToken();
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <input type="hidden" name="Id" value="@Model.Id">
+
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade pt-4 show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+            <div class="col-6">
+
+                <div class="form-group">
+                    <label for="nameInputText">Name</label>
+                    <input type="text" value="@Model.Name" name="Name" class="form-control" id="nameInputText" aria-describedby="nameInputTextHelp" placeholder="Enter name">
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionInputText">Description</label>
+                    <input type="text" value="@Model.Description" name="Description" class="form-control" id="descriptionInputText" aria-describedby="descriptionInputText" placeholder="">
+                </div>
+
+                <h4> Yandex XML Settings</h4>
+
+                <div class="form-group">
+                    <label for="userXml">User</label>
+                    <input type="text" value="@Model.User" name="User" class="form-control" id="userXml" aria-describedby="userXmlHelp" placeholder="Enter user">
+                    <small id="userXmlHelp" class="form-text text-muted">We'll use this text for Yandex XML settings.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="keyXml">Key</label>
+                    <input type="text" value="@Model.Key" name="Key" class="form-control" id="keyXml" aria-describedby="keyXmlHelp" placeholder="Enter key">
+                    <small id="keyXmlHelp" class="form-text text-muted">We'll use this text for Yandex XML settings.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="region">Region</label>
+                    <input type="text" value="@Model.Region" name="Region" class="form-control" id="region" aria-describedby="regionHelp">
+                    <small id="regionHelp" class="form-text text-muted">We'll use this text for Yandex XML settings.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter">Filter</label>
+                    <input type="text" name="Filter" value="@Model.Filter" class="form-control" id="keyXml" aria-describedby="filterHelp" placeholder="">
+                    <small id="filterHelp" class="form-text text-muted">We'll use this text for Yandex XML settings.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="pageLimit">Page Limit</label>
+                    <input type="text" value="@Model.PageLimit" name="PageLimit" class="form-control" id="pageLimit" aria-describedby="nameInputTextHelp" placeholder="">
+                </div>
+
+                <div class="form-group dropdown">
+                    <div class="">Http Module</div>
+                    <select name="HttpModule" class="form-control">
+                        <option class="" value="null">None</option>
+                        @foreach (var provider in Model.HttpModules)
+                    {
+                        @if (Model.HttpModule == provider.Id)
+                    {
+                        <option class="" selected value="@provider.Id"> @provider.Name</option>
+                }
+                else
+                {
+                    <option class="" value="@provider.Id"> @provider.Name</option>
+            }
+                }
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+        }
+    </div>
+
+<script>
+    function Save() {
+        $("form").submit();
+    }
+</script>

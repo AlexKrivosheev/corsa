@@ -1,0 +1,89 @@
+﻿@using Corsa.Infrastructure
+@using Corsa.Domain.Models.Actions
+@model Corsa.Models.Moduls.SerpAnalysisModuleViewModel
+
+<div class="crs-container crs-statistics__result crs-serp-statistics container-fluid container-statistics">
+    <div class="crs-serp-statistics__container">
+        <div class="crs-serp-statistics__requests">
+            <table class="crs-statistics__table crs-serp-statistics__table-request table-striped table-bordered">
+                <thead>
+                    <tr class="tr">
+                        <th scope="col">#</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var request in Model.Config.Requests)
+                    {
+                        <tr>
+                            <td>@request.Text</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="crs-serp-statistics__results">
+            <table class="crs-statistics__table crs-serp-statistics__table-result table-striped table-bordered">
+                <thead>
+                    <tr class="tr">
+
+                        @foreach (var result in Model.Results)
+                        {
+                            <th scope="col"  title="@result.Details.FinishedTime">
+                                <span>@result.Details.FinishedTime.ToShortDateString()</span>
+
+                                @{
+                                    var stateSuffix = (result.Details.Result == Corsa.Domain.Models.Actions.ActionExecutionResult.Successfully) ? "success" : "error";
+                                }
+
+                                <a class="ml-1 @($"statistic-result-state {stateSuffix}")" title="@result.Details.Message" href="#" onclick="openResultDetails('@result.Details.FinishedTime.ToShortDateString()','@Url.Action("GetResult", "SerpAnalysis", new { modulId = Model.Config.ProjectModuleId, resultId = result.Id })')">
+
+                                </a>
+                                <a class="ml-1" href="@Url.Action("DropStats", "SerpAnalysis", new { modulId = Model.Config.ProjectModuleId, resultId = result.Id })">
+
+                                    <i class="fas fa-trash"></i>
+                                </a>
+
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var request in Model.Config.Requests)
+                    {
+                        <tr>
+
+                            @foreach (var result in Model.Results)
+                            {
+
+                                <td class="cell">
+
+                                    @{var target = @result.Data.RequestStats.SingleOrDefault(stats => stats.SerpModuleRequestId == request.Id); }
+                                    
+                                    @if (target != null)
+                                    {
+                                        @if (target.Position>0)
+                                        {
+                                            @target.Position
+                                        }
+                                        else if(!string.IsNullOrEmpty(target.Details))
+                                        {
+                                            <i class="fas fa-exclamation-triangle" title="@target.Details" )></i>
+                                        }
+                                    }
+
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+

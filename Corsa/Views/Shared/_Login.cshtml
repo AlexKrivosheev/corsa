@@ -1,0 +1,28 @@
+﻿
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="dropdown">
+        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @User.Identity.Name
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+            <a class=" nav-link" href="@Url.Action("Index", "Settings")">Settings</a>
+            <form asp-action="Logout" asp-controller="Account" method="post">
+                @Html.AntiForgeryToken()
+                <a class=" nav-link" href='#' onclick='this.parentNode.submit(); return false;'>Log Out</a>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Register", "Account")">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Login", "Account")">Log In</a>
+        </li>
+    </ul>
+}

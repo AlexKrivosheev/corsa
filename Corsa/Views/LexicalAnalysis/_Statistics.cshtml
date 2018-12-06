@@ -1,0 +1,23 @@
+﻿@using Corsa.Domain.Moduls.LexicalAnalysis
+@using Corsa.Models.Moduls
+@model Corsa.Models.Moduls.LexicalAnalysisModuleViewModel
+
+
+<div id="requestStatistics">
+
+        @if (!Model.Results.Any())
+        {
+
+            Html.RenderPartial("_EmptyDetailsStatisics");
+        }
+        else
+        {
+            @foreach (var result in Model.Results)
+            {
+                Html.RenderPartial("_DetailsStatisics", new ModuleResultViewModel<LexModuleData>(Model.Id,result));
+            }
+        }
+
+</div>
+
+

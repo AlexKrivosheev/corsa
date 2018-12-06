@@ -1,0 +1,46 @@
+﻿@model Corsa.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Registration";
+}
+
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[]
+        {
+        new BreadCrumbItem("Registration", Url.Action("Register","Account"),true)
+        };
+    }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+
+}
+<div class="crs-container container-fluid">
+
+    <div class="col-6">
+        <form asp-action="Register" asp-controller="Account" method="post">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Register" />
+            </div>
+        </form>
+
+    </div>
+</div>

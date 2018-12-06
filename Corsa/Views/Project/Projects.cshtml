@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Corsa.Infrastructure.TagHelpers;
+
+@inject IViewLocalizer Localizer
+
+@model IEnumerable<Corsa.Domain.Models.Projects.Project>
+@{
+    ViewData["Title"] = Localizer["Projects"];
+    Layout = "~/Views/Shared/_BasicLayout.cshtml";
+}
+
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[] {
+            new BreadCrumbItem("Projects")
+        };
+    }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+    <ul class="nav action-navbar-list">
+        <li class="action-item">
+            <button type="button" onclick="location.href='@Url.Action("Create","Project")'" class="btn btn-primary">New project</button>
+        </li>
+    </ul>
+}
+
+<ul class="list-group list-group-flush request-list">
+    @foreach (var r in Model)
+    {
+        <li class="list-group-item request-item" onclick="openRequest(event,'@Url.Action("Index", "Project", new { Id = r.Id })')">
+            <div class="row">
+                <div class="col-6">
+                    @r.Name
+                </div>
+                <div class="col-6">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item action">
+                            <a href="@Url.Action("Edit","Project",new {Id=r.Id})"><i class="fas fa-pencil-alt"></i></a>
+                        </li>
+
+                        <li class="nav-item action">
+                            <a href="@Url.Action("Config","Project",new {Id=r.Id})"><i class="fas fa-cog"></i></a>
+                        </li>
+                        
+
+                        <li class="nav-item action">
+                            <a href="@Url.Action("Delete","Project",new {Id=r.Id})"><i class="fas fa-trash"></i></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+
+<script>
+    function openRequest(e, url) {
+        window.location = url;
+    }
+</script>
+
+

@@ -1,0 +1,100 @@
+﻿@model Corsa.Models.Modules.LinkedProjectModuleViewModel
+
+<div class="row">
+    <table id="linkedModuleTable" class="table col-8">
+        <thead>
+            <tr>
+                <th scope="col">Module</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int i = 0; i < Model.LinkedModules.Count; i++)
+            {
+            <tr>
+                
+
+                <td>
+                    <input type="text" name="LinkedModules[@i].LinkedProjectModuleId" class="form-control-plaintext" hidden  value="@Model.LinkedModules[@i].LinkedProjectModuleId">
+                    <input type="text" class="form-control-plaintext" readonly value="@Model.LinkedModules[@i].LinkedProjectModule.Name">
+                </td>
+                <td>
+                    <input type="text" name="LinkedModules[@i].Description" class="form-control-plaintext" readonly value="@Model.LinkedModules[@i].Description">
+                </td>
+                <td>
+                    <a href="#" onclick="return DropLinkedModule($(this).closest(&quot;tr&quot;))"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr id="newLinkedModuleRow">
+                <td>
+                    <div class="form-group dropdown">                        
+                        <select id="module" name="module" class="form-control">
+                            <option class="" value="null">None</option>
+                            @foreach (var module in Model.AvailableModules)
+                            {
+                                <option class="" value="@module.Id"> @module.Name</option>
+                            }
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <input type="text" name="description" class="form-control" id="description">
+                </td>
+                <td>
+                    <button class="btn btn-primary" onclick="return AddNewLinkedModule()">Add</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+<script>
+    function DropLinkedModule(row) {
+        try {
+            row.remove();
+        }
+        finally
+        {
+
+        }
+
+
+        return false;
+    }
+
+    function AddNewLinkedModule() {
+
+        try {
+
+            var module = $("#newLinkedModuleRow").find("#module");            
+            var description = $("#newLinkedModuleRow").find("#description");
+
+            var linkedModuleTableBody = $("#linkedModuleTable > tbody");
+            var rowCount = $('#linkedModuleTable > tbody tr').length;
+
+            linkedModuleTableBody.append("<tr>" +                
+                "<td><input type='text' name='LinkedModules[" + rowCount + "].LinkedProjectModuleId' class='form-control-plaintext' hidden value='" + module.val() + "'>" +                
+                "<input type='text' class='form-control-plaintext' readonly value='" + module.find("option:selected").text() + "'> </td>" +
+                "<td><input type='text' name='LinkedModules[" + rowCount + "].Description' class='form-control-plaintext' readonly value='" + description.val() + "'> </td>" +
+                "<td><a href='#' onclick='return DropLinkedModule($(this).closest(&quot;tr&quot;))'><i class='fas fa-trash'></i></a></td>" +
+                "</tr>");
+
+            
+            module.val("");            
+            description.val("");
+        }
+        finally
+        {
+
+
+        }
+
+        return false;
+    }
+</script>

@@ -1,0 +1,11 @@
+﻿@model Corsa.Models.Moduls.ProjectModuleViewModel
+
+<div class="modul-selector-item pb-4 col-lg-6 col-md-12" onclick='location.href="@Url.Action(Model.ViewDescriptor.CreateAction, Model.ViewDescriptor.Controller, new { Project = Model.Project.Id })"'>
+
+    <div class="crs-email-notif-toolbox card">
+        <div class="card-body">
+            <p class="crs-email-notif-toolbox__title project-module-identity card-title"> <i class="crs-email-notif-toolbox__icon fas fa-envelope"></i> @Model.ViewDescriptor.Name </p>
+            <p class="crs-email-notif-toolbox__desc card-text">@Model.ViewDescriptor.Description</p>
+        </div>
+    </div>
+</div>

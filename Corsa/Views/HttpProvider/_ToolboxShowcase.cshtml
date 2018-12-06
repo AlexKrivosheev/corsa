@@ -1,0 +1,11 @@
+﻿@model Corsa.Models.Moduls.ProjectModuleViewModel
+
+<div class="modul-selector-item pb-4 col-lg-6 col-md-12" onclick='location.href="@Url.Action(Model.ViewDescriptor.CreateAction, Model.ViewDescriptor.Controller, new { Project = Model.Project.Id })"'>
+
+    <div class= "crs-http-provider-toolbox card">
+        <div class="card-body">
+            <p class="crs-http-provider__title project-module-identity card-title"> <i class="crs-http-provider-toolbox__icon fas fa-code"></i> @Model.ViewDescriptor.Name </p>
+            <p class="crs-http-provider__desc card-text">@Model.ViewDescriptor.Description</p>
+        </div>
+    </div>
+</div>

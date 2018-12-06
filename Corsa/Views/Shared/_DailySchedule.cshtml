@@ -1,0 +1,101 @@
+﻿@using Corsa.Domain.Tasks
+@model Corsa.Models.Moduls.DailyScheduleModelView
+
+<div class="row">
+    <table id="dailyScheduleTable" class="table col-10">
+        <thead>
+            <tr>
+                <th scope="col">Day</th>
+                <th scope="col">Time</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int i = 0; i < Model.ScheduleTable.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="text" name="DailySchedules[@i].Day" class="form-control-plaintext" readonly value="@Model.ScheduleTable[@i].Day">
+                    </td>
+                    <td>
+                        <input type="text" name="DailySchedules[@i].Time" class="form-control-plaintext" readonly value="@Model.ScheduleTable[@i].Time">
+                    </td>
+                    <td>
+                        <input type="text" name="DailySchedules[@i].Description" class="form-control-plaintext" readonly value="@Model.ScheduleTable[@i].Description">
+                    </td>
+                    <td>
+                        <a href="#" onclick="return DropDailySchedule($(this).closest(&quot;tr&quot;))"><i class="fas fa-trash"></i></a>                        
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr id="newDailyScheduleRow">
+                <td>
+                    <select id="day" class="form-control" placeholder="Day">
+                        <option value="@EnumScheduleWeek.Monday"> @EnumScheduleWeek.Monday </option>
+                        <option value="@EnumScheduleWeek.Tuesday"> @EnumScheduleWeek.Tuesday </option>
+                        <option value="@EnumScheduleWeek.Wednesday"> @EnumScheduleWeek.Wednesday </option>
+                        <option value="@EnumScheduleWeek.Thursday"> @EnumScheduleWeek.Thursday </option>
+                        <option value="@EnumScheduleWeek.Friday"> @EnumScheduleWeek.Friday </option>
+                        <option value="@EnumScheduleWeek.Saturday"> @EnumScheduleWeek.Saturday </option>
+                        <option value="@EnumScheduleWeek.Sunday"> @EnumScheduleWeek.Sunday </option>
+                    </select>
+
+                </td>
+                <td>                    
+                    <input id="time" type="time" class=" form-control">
+                </td>
+                <td>
+                    <input type="text" name="description" class="form-control" id="description">
+                </td>
+                <td>
+                    <button class="btn btn-primary" onclick="return AddNewDailySchedule()">Add</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script>
+    function DropDailySchedule(row) {
+
+        try {
+            row.remove();
+
+        } finally { }
+
+        
+
+        return false;
+    }
+
+    function AddNewDailySchedule() {
+        try {
+            var day = $("#newDailyScheduleRow").find("#day");
+            var time = $("#newDailyScheduleRow").find("#time");
+            var description = $("#newDailyScheduleRow").find("#description");
+
+            var dailyScheduleTableBody = $("#dailyScheduleTable > tbody");
+            var rowCount = $('#dailyScheduleTable > tbody tr').length;
+
+            dailyScheduleTableBody.append("<tr>" +
+                "<td><input type='text' name='DailySchedules[" + rowCount + "].Day' class='form-control-plaintext' readonly value='" + day.val() + "'> </td>" +
+                "<td><input type='text' name='DailySchedules[" + rowCount + "].Time' class='form-control-plaintext' readonly value='" + time.val() + "'> </td>" +
+                "<td><input type='text' name='DailySchedules[" + rowCount + "].Description' class='form-control-plaintext' readonly value='" + description.val() + "'> </td>" +
+                "<td><a href='#' onclick='return DropDailySchedule($(this).closest(&quot;tr&quot;))'><i class='fas fa-trash'></i></a></td>" +
+                "</tr>");
+
+
+            day.val("");
+            time.val("");
+            description.val("");
+
+        } finally { }
+
+        return false;
+    }
+</script>

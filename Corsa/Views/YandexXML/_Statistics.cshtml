@@ -1,0 +1,52 @@
+﻿@using Corsa.Domain.Processing.Serp;
+
+@model Corsa.Models.Moduls.ModuleResultViewModel<List<SerpWebPage>>
+
+<div id="requestStatistics" class="crs-statistics-runtime">
+
+    @if (Model.Result == null || Model.Result.Details == null)
+    {
+        <div class="crs-statistics-runtime__info__empty">
+            <h5> There are no any statistics. Please run for obtaining one.</h5>
+        </div>
+    }
+    else
+    {
+        var stateSuffix = (Model.Result.Details.Result == Corsa.Domain.Models.Actions.ActionExecutionResult.Successfully) ? "success" : "error";
+        <a class="crs-statistics-runtime__state ml-1 @stateSuffix" title="@Model.Result.Details.Message" href="#" onclick="openResultDetails('@Model.Result.Details.FinishedTime.ToShortDateString()','@Url.Action("GetResult", "YandexXML", new { modulId = Model.ModuleId })')">
+
+            @if (Model.Result.Details.Result == Corsa.Domain.Models.Actions.ActionExecutionResult.Successfully)
+            {
+                @:Show Details
+            }
+            else
+            {
+                @Model.Result.Details.Message
+            }
+
+        </a>
+    }
+
+        <div class="crs-statistics-runtime__result crs-statistics-serp">
+            @if (Model.Result != null && Model.Result.Data != null)
+    {
+            <ul class="crs-statistics-serp__list list-group">                
+                @foreach (SerpWebPage page in Model.Result.Data)
+                {
+                <li class="crs-statistics-serp__item crs-serp-result-item">
+
+                    <div class="crs-serp-result-item__title">
+                        @(page.Title)
+                    </div>
+                    <p class="mb-1"> <a class="crs-serp-result-item__url" target="_blank" href="@(page.Url)"> @(page.Url)</a></p>                    
+                </li>
+                }
+            </ul>
+
+}
+        </div>
+    
+
+</div>
+
+

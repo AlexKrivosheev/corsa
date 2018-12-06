@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!-- JQuery Awesome -->
+    <script src="~/lib/jQuery/dist/jquery.js"></script>
+
+    <!-- Font Awesome -->
+    <script src="~/lib/fontawesome/svg-with-js/js/fontawesome-all.js"></script>
+    <link href="~/lib/fontawesome/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" />
+
+    <!-- nprogress -->
+    <script src="~/lib/nprogress/nprogress.js"></script>
+    <link href="~/lib/nprogress/nprogress.css" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap-flatly.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <link href="~/css/corsa.css" rel="stylesheet" />
+    <script src="~/js/corsa.js"></script>
+</head>
+<body>
+    <div class="crs-header  navbar navbar-dark bg-primary" role="navigation">
+        <div class="container-fluid">
+            <a class="crs-header__title navbar-brand mr-auto" href="/">Corsa</a>
+            @Html.Partial("_Login");
+            
+        </div>
+    </div>
+    <div class="crs-toolbar navbar sub-navbar">
+        <div class="container-fluid">
+
+            <div class="crs-toolbar__title nav">@RenderSection("BreadCrumb", required: false)</div>
+            <div class="crs-toolbar__action crs-toolbar-btn navbar-right">@RenderSection("ActionBar", required: false)</div>
+        </div>
+    </div>
+
+    <div id="progressbar" class="progress-bar-container"></div>
+
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Well done!</strong> @TempData["message"]
+        </div>
+    }
+
+    <div class="container-fluid body-content">
+        @RenderBody()
+    </div>
+</body>
+</html>

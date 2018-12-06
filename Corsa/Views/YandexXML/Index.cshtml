@@ -1,0 +1,111 @@
+﻿@using Corsa.Domain.Processing.Moduls
+@using Corsa.Domain.Moduls
+@using Corsa.Domain.Processing.Serp
+@using Corsa.Infrastructure.TagHelpers;
+@using  Corsa.Models.Moduls
+
+@model Corsa.Models.Moduls.YanexXMLModuleViewModel
+@{
+    ViewData["Title"] = $"{Model.Config.ProjectModule.Name}";
+    Layout = "_FluidLayout";
+}
+
+<script src="~/js/module-runtime-state.js"></script>
+<link href="~/css/module-runtime-state.css" rel="stylesheet" />
+
+<script src="~/js/module-result-details.js"></script>
+
+@section BreadCrumb{
+    @{
+        var items = new BreadCrumbItem[]
+        {
+new BreadCrumbItem("Projects", Url.Action("Index","Project")),
+new BreadCrumbItem(Model.ProjectName, Url.Action("Index","Project",new {Id=Model.Project})),
+new BreadCrumbItem("Config", Url.Action("Config","Project",new {Id=Model.Project})),
+new BreadCrumbItem(Model.Name, Url.Action("Index","YandexXML", new {Id=Model.Id}),true)
+                        };
+    }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+    <ul class="crs-toolbar-btn__list nav">
+        <li class="crs-toolbar-btn__item">
+            <button type="button" onclick="location.href='@Url.Action("Edit", "YandexXML", new { id = Model.Id })'" class="btn btn-primary">Edit</button>
+        </li>
+    </ul>
+}
+
+@{
+    Html.RenderPartial("_DefaultModalWindow");
+    Html.RenderPartial("_ModuleRuntimeState");
+}
+<div class="crs-yndex-xml crs-container container-fluid">
+
+    <form id="testForm">
+        <input type="hidden" name="Id" class="form-control" value="@Model.Id">
+        <div class="crs-yndex-xml__request  input-group mb-3 col-md-12 col-lg-6">
+            <input type="text" name="request" class="form-control" placeholder="Request's text" aria-label="Request's text" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <input type="submit" class="btn btn-outline-secondary" value="Run" />
+            </div>
+        </div>
+    </form>
+
+    <div class="crs-yndex-xml__statistics">
+        @{
+            Html.RenderPartial("_Statistics", new ModuleResultViewModel<List<SerpWebPage>>(Model.Id, new ModuleTaskResult<List<SerpWebPage>>()));
+        }
+    </div>
+
+</div>
+<script>
+
+    var runtimeModuleState;
+    var moduleResult;
+
+    $(document).ready(function () {
+        runtimeModuleState = new RuntimeStateModule('@Url.Action("GetModuleState", "YandexXML", new { id = Model.Id })', '#moduleRuntimeStateBar', 1000);
+        $(runtimeModuleState).on("completed", function () { updateStatistics('@Url.Action("GetStatistics", "YandexXML", new { id = Model.Id })'); });
+        runtimeModuleState.start();
+
+        moduleResult = new ResultDetailsModule("#modalWindow", "#modalTitle", "#modalBody", "#modalProgressBar", "#modalInfo");
+    });
+
+    function openResultDetails(title, url) {
+
+        moduleResult.open(title, url);
+
+        return false;
+    }
+
+        $("#testForm").submit(function (e) {
+            e.preventDefault();
+
+            $.post('@Url.Action("Update", "YandexXML")', $('#testForm').serialize())
+                .done(function (data) {
+                    runtimeModuleState.start(data);
+                });
+        });
+
+    function updateStatistics(url) {
+
+        runtimeModuleState.showMessage("Module execution has been completed. Getting result...");
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html',
+
+            success: function (data) {
+                $('#requestStatistics').replaceWith(data);
+                runtimeModuleState.hideMessage();
+            }
+        });
+    }
+
+
+</script>
+
+

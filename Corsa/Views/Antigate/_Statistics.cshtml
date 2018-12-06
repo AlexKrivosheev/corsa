@@ -1,0 +1,88 @@
+﻿@using Corsa.Domain.Processing.Serp;
+@using Corsa.Domain.Moduls.RutimeModuls.Antigate
+
+@model Corsa.Models.Moduls.ModuleResultViewModel<AntigateTaskResult>
+
+<div id="requestStatistics" class="crs-statistics-runtime">
+
+    @if (Model.Result == null || Model.Result.Details == null)
+    {
+        <div class="crs-statistics-runtime__info__empty">
+            <h5> There are no any statistics. Please run for obtaining one.</h5>
+        </div>
+    }
+    else
+    {
+        var stateSuffix = (Model.Result.Details.Result == Corsa.Domain.Models.Actions.ActionExecutionResult.Successfully) ? "success" : "error";
+        <a class="crs-statistics-runtime__state ml-1 @stateSuffix" title="@Model.Result.Details.Message" href="#" onclick="openResultDetails('@Model.Result.Details.FinishedTime.ToShortDateString()','@Url.Action("GetResult", "Antigate", new { modulId = Model.ModuleId })')">
+
+            @if (Model.Result.Details.Result == Corsa.Domain.Models.Actions.ActionExecutionResult.Successfully)
+            {
+                @:Show Details
+            }
+            else
+            {
+                @Model.Result.Details.Message
+            }
+
+        </a>
+    }
+
+        <div class="crs-statistics-runtime__result crs-statistics-http-provider">
+            @if (Model.Result != null && Model.Result.Data != null)
+            {
+                Html.RenderPartial($"_{Model.Result.Data.Task.Type}", Model.Result.Data);
+
+                <div class="form-inline">
+                    <label for="textTaskId" class="col-form-label pr-2">Task Id:</label>
+                    <div class=""><span id="textTaskId" class=""> @Model.Result.Data.TaskId</span></div>
+                </div>
+
+                <div class="form-inline">
+                    <label for="textErrorCode" class="col-form-label pr-2">Error Code:</label>
+                    <div class=""><span id="textErrorCode" class=""> @Model.Result.Data.ErrorCode</span></div>
+                </div>
+
+                <div class="form-inline">
+                    <label for="textErrorDescription" class="col-form-label pr-2">Error Description:</label>
+                    <div class=""><span id="textErrorDescription" class=""> @Model.Result.Data.ErrorDescription</span></div>
+                </div>
+
+                <div class="form-inline">
+                    <label for="textStatus" class="col-form-label pr-2">Status:</label>
+                    <div class=""><span id="textStatus" class=""> @Model.Result.Data.Status</span></div>
+                </div>
+
+
+                <div class="form-inline">
+                    <label for="textCreateTime" class="col-form-label pr-2">Create Time:</label>
+                    <div class=""><span id="textCreateTime" class=""> @Model.Result.Data.CreateTime</span></div>
+                </div>
+
+                <div class="form-inline">
+                    <label for="textEndTime" class="col-form-label pr-2">End Time:</label>
+                    <div class=""><span id="textEndTime" class=""> @Model.Result.Data.EndTime</span></div>
+                </div>
+
+                <div class="form-inline">
+                    <label for="textCost" class="col-form-label pr-2">Cost:</label>
+                    <div class=""><span id="textCost" class=""> @Model.Result.Data.Cost</span></div>
+                </div>
+
+                <div class="form-inline">
+                    <label for="textSolveCount" class="col-form-label pr-2">Solve Count:</label>
+                    <div class=""><span id="textSolveCount" class=""> @Model.Result.Data.SolveCount</span></div>
+                </div>
+
+                <div class="form-inline">
+                    <label for="textIp" class="col-form-label pr-2">Ip:</label>
+                    <div class=""><span id="textIp" class=""> @Model.Result.Data.Ip</span></div>
+                </div>
+
+            }
+
+        </div>
+
+</div>
+
+

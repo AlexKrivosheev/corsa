@@ -1,0 +1,76 @@
+﻿@using Corsa.Models.Moduls
+@using Corsa.Infrastructure.TagHelpers;
+@model Corsa.Models.ProjectModel.ProjectViewModel
+
+
+@{
+    ViewData["Title"] = $"Project: {Model.Instance.Name}";
+    Layout = "~/Views/Shared/_FluidLayout.cshtml";
+}
+
+@section BreadCrumb{
+
+    @{
+            var items = new BreadCrumbItem[] {
+               
+            new BreadCrumbItem("Projects", Url.Action("Index","Project")),
+            new BreadCrumbItem(Model.Instance.Name, Url.Action("Index","Project",new {id = Model.Instance.Id}),true)
+        };
+        }
+
+    <breadcrumb items="@items"></breadcrumb>
+}
+
+@section ActionBar{
+    <ul class="crs-toolbar-btn__list nav">
+
+        <li class="crs-toolbar-btn__item">
+            <button type="button" onclick="location.href='@Url.Action("Config", "Project", new { id = Model.Instance.Id})'" class="btn btn-primary">Config</button>
+        </li>
+
+        <li class="crs-toolbar-btn__item">
+            <button type="button" onclick="location.href='@Url.Action("Edit", "Project", new { id = Model.Instance.Id})'" class="btn btn-primary">Edit</button>
+        </li>
+
+
+        <li class="crs-toolbar-btn__item">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modulSelectorDialog">
+                Add Module
+            </button>
+        </li>
+
+    </ul>
+}
+<!-- Modal -->
+<div class="modal fade" id="modulSelectorDialog" tabindex="-1" role="dialog" aria-labelledby="modulSelectorDialogTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modulSelectorDialoglLongTitle">Modules</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                @foreach (var m in Model.RegisteredModuls)
+                {
+                    Html.RenderPartial(@m.ToolboxShowCase, new ProjectModuleViewModel(Model.Instance, null, m));
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var m in Model.Instance.Moduls.Where(module=> !Model.ModulViewRegistry[module.Code].IsSystem))
+    {
+
+        Html.RenderPartial(@Model.ModulViewRegistry[m.Code].ProjectShowCase, new ProjectModuleViewModel(Model.Instance, m, Model.ModulViewRegistry[m.Code]));
+
+    }
+</div>
+
+
